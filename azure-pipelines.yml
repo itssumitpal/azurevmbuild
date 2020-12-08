@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Enterprise Subscription(e491c48f-991f-48e7-af73-6bb5cb27efd4)'
+    subscriptionId: 'e491c48f-991f-48e7-af73-6bb5cb27efd4'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'kubetraining'
+    location: 'Central India'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://github.com/itssumitpal/azurevmbuild/blob/main/azure/kubetrn/azurevmdeploy.json'
+    csmParametersFileLink: 'https://github.com/itssumitpal/azurevmbuild/blob/main/azure/kubetrn/azurevmparameter.json'
+    deploymentMode: 'Incremental'
